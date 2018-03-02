@@ -20,18 +20,22 @@ class NewsClass:
                 news_content=news_content,
             )
 
-            # create the topic if not exist
-            if self.check_topic(topic_name.upper()) is None:
-                rec_topic = self.create_topic(topic_name.upper())
+            list_news_topic = []
+            for item_topic in topic_name:
+                # create the topic if not exist
+                if self.check_topic(item_topic.upper()) is None:
+                    rec_topic = self.create_topic(item_topic.upper())
 
-            # create relation between news and topic
-            rec_news_topic = NewsRelationTopic.objects.create(
-                relation_id=datetime.now().strftime("%Y%m%d%H%M%S"),
-                news=rec_news,
-                topic=rec_topic
-            )
+                # create relation between news and topic
+                rec_news_topic = NewsRelationTopic.objects.create(
+                    relation_id=datetime.now().strftime("%Y%m%d%H%M%S"),
+                    news=rec_news,
+                    topic=rec_topic
+                )
 
-            return rec_news_topic
+                list_news_topic.append(rec_news_topic)
+
+            return list_news_topic
 
     def delete_news(self, id_news):
         rec = News.objects.get(news_id=id_news)
