@@ -1,11 +1,6 @@
-from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.decorators import permission_classes, authentication_classes, api_view
 from rest_framework.response import Response
-from django.conf import settings
-from config.log import logger
-from django.utils import timezone
-import hmac
-import hashlib
+from .services import News
 
 
 @api_view(['GET'])
@@ -25,5 +20,6 @@ def news_list(request):
 @api_view(['POST'])
 @permission_classes([])
 @authentication_classes([])
-def news_add(request, news_id, news_title=None, news_content=None):
+def news_add(request):
+    ret = News.add_news(request.data)
     return Response({'message': 'add news id {}'.format(news_id)}, 200)
