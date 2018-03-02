@@ -39,10 +39,19 @@ class NewsClass:
 
     def delete_news(self, id_news):
         rec = News.objects.get(news_id=id_news)
-        rec.delete()
+        rec.news_status = 'DELETED'
+        rec.save()
 
-    def list_news(self):
-        rec = News.objects.filter().all()
+    def list_news(self, status=None, topic=None):
+        if status is not None:
+            obj_news = News.objects.filter(news_status=status)
+        else:
+            obj_news = News.objects.filter()
+
+        if topic is not None:
+            obj_topic = Topic.objects.filter(topic_name=topic.upper())
+
+        rec = obj_news.all()
         list_news = []
         for item_news in rec:
             list_news.append(

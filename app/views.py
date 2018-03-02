@@ -16,8 +16,11 @@ def news_delete(request, news_id):
 @permission_classes([])
 @authentication_classes([])
 def news_list(request):
+    status = request.query_params.get('status', None)
+    topic = request.query_params.get('topic', None)
+
     svc = NewsClass()
-    lst = svc.list_news()
+    lst = svc.list_news(status=status, topic=topic)
     return Response(lst, 200)
 
 
