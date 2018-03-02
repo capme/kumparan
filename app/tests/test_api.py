@@ -4,7 +4,7 @@ from ..models import News, Topic, NewsRelationTopic
 
 class TestApi(TestCase):
     def setUp(self):
-        pass
+        self.rec_id_news = None
 
     def test_api_add_news(self):
         payload = {
@@ -26,9 +26,17 @@ class TestApi(TestCase):
         ).first()
         self.assertIsNotNone(rec_relation_news_topic)
 
+        self.rec_id_news = resp.data['News ID']
+
     def test_api_delete_news(self):
-        resp = self.client.get('/api/news/1/delete')
+        self.test_api_add_news()
+
+        rec_news = News.objects.filter(news_title="News Title").first()
+        self.assertIsNotNone(rec_news)
+        resp = self.client.get('/api/news/{}/delete'.format(self.rec_id_news))
         self.assertEqual(resp.status_code, 200)
+        rec_news = News.objects.filter(news_title="News Title").first()
+        self.assertIsNone(rec_news)
 
     def test_api_list_news(self):
         resp = self.client.get('/api/news')

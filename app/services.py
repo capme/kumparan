@@ -34,7 +34,8 @@ class NewsClass:
             return rec_news_topic
 
     def delete_news(self, id_news):
-        one_task = News.objects.get(id=1)
+        rec = News.objects.get(news_id=id_news)
+        rec.delete()
 
     def list_news(self):
         pass

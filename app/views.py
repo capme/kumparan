@@ -7,6 +7,8 @@ from .services import NewsClass
 @permission_classes([])
 @authentication_classes([])
 def news_delete(request, news_id):
+    svc = NewsClass()
+    svc.delete_news(news_id)
     return Response({'message': 'delete news id {}'.format(news_id)}, 200)
 
 
@@ -25,10 +27,13 @@ def news_add(request):
     ret = svc.add_news(payload=request.data)
     if ret:
         return Response(
-            {'message': 'Success create News. News ID : {}, Topic ID : {}'.format(
+            {
+                'message': 'Success create News. News ID : {}, Topic ID : {}'.format(
                 ret.news,
-                ret.topic
-            )}, 200
+                ret.topic)
+                , 'News ID': ret.news.news_id
+                , 'Topic ID': ret.topic.topic_id
+            }, 200
         )
     else:
         return Response(
