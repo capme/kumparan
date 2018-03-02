@@ -1,6 +1,6 @@
 from rest_framework.decorators import permission_classes, authentication_classes, api_view
 from rest_framework.response import Response
-from .services import News
+from .services import NewsClass
 
 
 @api_view(['GET'])
@@ -21,5 +21,16 @@ def news_list(request):
 @permission_classes([])
 @authentication_classes([])
 def news_add(request):
-    ret = News.add_news(request.data)
-    return Response({'message': 'add news id {}'.format(news_id)}, 200)
+    svc = NewsClass()
+    ret = svc.add_news(payload=request.data)
+    if ret:
+        return Response(
+            {'message': 'Success create News. News ID : {}, Topic ID : {}'.format(
+                ret.news,
+                ret.topic
+            )}, 200
+        )
+    else:
+        return Response(
+            {'message': 'Failed create News'}, 502
+        )

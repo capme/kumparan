@@ -3,7 +3,7 @@ from datetime import datetime
 from django.db import transaction
 
 
-class News:
+class NewsClass:
     def __init__(self):
         pass
 
@@ -15,7 +15,7 @@ class News:
 
             # create the news
             rec_news = News.objects.create(
-                news_id=datetime.now().strftime("%Y%m%d%%H%M%S"),
+                news_id=datetime.now().strftime("%Y%m%d%H%M%S"),
                 news_title=news_title,
                 news_content=news_content,
             )
@@ -26,26 +26,26 @@ class News:
 
             # create relation between news and topic
             rec_news_topic = NewsRelationTopic.objects.create(
-                relation_id=datetime.now().strftime("%Y%m%d%%H%M%S"),
-                news=rec_news.news_id,
-                topic=rec_topic.topic_id
+                relation_id=datetime.now().strftime("%Y%m%d%H%M%S"),
+                news=rec_news,
+                topic=rec_topic
             )
 
             return rec_news_topic
 
     def delete_news(self, id_news):
-        pass
+        one_task = News.objects.get(id=1)
 
     def list_news(self):
         pass
 
     def check_topic(self, topic_name):
-        rec_topic = Topic.objects.get(topic_name=topic_name.upper()).first()
+        rec_topic = Topic.objects.filter(topic_name=topic_name.upper()).first()
         return rec_topic
 
     def create_topic(self, topic_name):
         return Topic.objects.create(
-            topic_id=datetime.now().strftime("%Y%m%d%%H%M%S"),
+            topic_id=datetime.now().strftime("%Y%m%d%H%M%S"),
             topic_name=topic_name.upper()
         )
 
