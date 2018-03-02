@@ -67,14 +67,15 @@ class NewsClass:
             for item_news_topic in rec_news_topic:
                 list_topic.append(item_news_topic.topic.topic_name)
 
-            list_news.append(
-                {
-                    'news_id': item_news.news_id,
-                    'news_title': item_news.news_title,
-                    'news_content': item_news.news_content,
-                    'topic': list_topic
-                }
-            )
+            if len(list_topic) > 0:
+                list_news.append(
+                    {
+                        'news_id': item_news.news_id,
+                        'news_title': item_news.news_title,
+                        'news_content': item_news.news_content,
+                        'topic': list_topic
+                    }
+                )
 
         return list_news
 
