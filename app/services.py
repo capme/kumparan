@@ -23,7 +23,8 @@ class NewsClass:
             list_news_topic = []
             for item_topic in topic_name:
                 # create the topic if not exist
-                if self.check_topic(item_topic.upper()) is None:
+                rec_topic = self.check_topic(item_topic.upper())
+                if rec_topic is None:
                     rec_topic = self.create_topic(item_topic.upper())
 
                 # create relation between news and topic
