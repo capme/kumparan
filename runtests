@@ -1,0 +1,22 @@
+#!/usr/bin/env python3.6
+import sys
+import subprocess
+from config.settings.base import LOCAL_APPS
+
+packages = ','.join(LOCAL_APPS)
+# Basic argument
+args = ['python3.6', 'manage.py', 'test']
+
+if len(sys.argv) > 1:
+    args += sys.argv[1:]
+else:
+    args += [
+        '--with-coverage',
+        '--cover-package={}'.format(packages)
+    ]
+# Point to test config
+args += ['--settings=config.settings.test']
+p = subprocess.Popen(args)
+p.wait()
+# Exit with return code given from python test
+sys.exit(p.returncode)
