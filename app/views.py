@@ -16,7 +16,9 @@ def news_delete(request, news_id):
 @permission_classes([])
 @authentication_classes([])
 def news_list(request):
-    return Response({'message': 'list news'}, 200)
+    svc = NewsClass()
+    lst = svc.list_news()
+    return Response(lst, 200)
 
 
 @api_view(['POST'])

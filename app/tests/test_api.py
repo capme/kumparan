@@ -39,5 +39,9 @@ class TestApi(TestCase):
         self.assertIsNone(rec_news)
 
     def test_api_list_news(self):
+        self.test_api_add_news()
+
         resp = self.client.get('/api/news')
         self.assertEqual(resp.status_code, 200)
+        self.assertNotEqual(resp.data, [])
+        self.assertEqual(len(resp.data), 1)

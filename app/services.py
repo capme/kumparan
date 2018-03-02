@@ -38,7 +38,18 @@ class NewsClass:
         rec.delete()
 
     def list_news(self):
-        pass
+        rec = News.objects.filter().all()
+        list_news = []
+        for item_news in rec:
+            list_news.append(
+                {
+                    'news_id': item_news.news_id,
+                    'news_title': item_news.news_title,
+                    'news_content': item_news.news_content,
+                }
+            )
+
+        return list_news
 
     def check_topic(self, topic_name):
         rec_topic = Topic.objects.filter(topic_name=topic_name.upper()).first()
