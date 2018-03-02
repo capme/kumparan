@@ -15,6 +15,13 @@ def news_delete(request, news_id):
     return Response({'message': 'delete news id {}'.format(news_id)}, 200)
 
 
+@api_view(['GET'])
+@permission_classes([])
+@authentication_classes([])
+def news_list(request):
+    return Response({'message': 'list news'}, 200)
+
+
 @api_view(['POST'])
 @permission_classes([])
 @authentication_classes([])
