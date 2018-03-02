@@ -1,0 +1,11 @@
+/.idea/
+*.pyc
+db.sqlite3
+/venv3
+/venv3.6
+/.env
+.coverage
+.DS_Store
+/*.md5
+/.cache
+/.vscode
