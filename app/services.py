@@ -44,26 +44,55 @@ class NewsClass:
         rec.save()
 
     def list_news(self, status=None, topic=None):
+        # tinggal filtering kombinasi antara status dan topic
         if status is not None:
-            obj_news = News.objects.filter(news_status=status)
+            obj_news = News.objects.filter(news_status=status).all()
         else:
-            obj_news = News.objects.filter()
+            obj_news = News.objects.filter().all()
 
-        if topic is not None:
-            obj_topic = Topic.objects.filter(topic_name=topic.upper())
-
-        rec = obj_news.all()
         list_news = []
-        for item_news in rec:
+        for item_news in obj_news:
+            # getting list topic of the news
+            list_topic = []
+            if topic is not None:
+                rec_news_topic = self._get_topic_from_news(
+                    news_title=item_news.news_title,
+                    topic_name=topic.upper()
+                )
+            else:
+                rec_news_topic = self._get_topic_from_news(
+                    news_title=item_news.news_title
+                )
+
+            for item_news_topic in rec_news_topic:
+                list_topic.append(item_news_topic.topic.topic_name)
+
             list_news.append(
                 {
                     'news_id': item_news.news_id,
                     'news_title': item_news.news_title,
                     'news_content': item_news.news_content,
+                    'topic': list_topic
                 }
             )
 
         return list_news
+
+    def _get_topic_from_news(self, news_title, topic_name=None):
+        if topic_name is not None:
+            # get news object from title
+            obj_news = News.objects.filter(news_title=news_title)
+            # get topic object from topic name
+            obj_topic = Topic.objects.filter(topic_name=topic_name.upper())
+
+            rec = NewsRelationTopic.objects.filter(news=obj_news, topic=obj_topic).all()
+        else:
+            # get news object from title
+            obj_news = News.objects.filter(news_title=news_title)
+
+            rec = NewsRelationTopic.objects.filter(news=obj_news).all()
+
+        return rec
 
     def check_topic(self, topic_name):
         rec_topic = Topic.objects.filter(topic_name=topic_name.upper()).first()
