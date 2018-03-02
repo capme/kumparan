@@ -6,7 +6,8 @@ router = routers.DefaultRouter(trailing_slash=False)
 
 urlpatterns = [
     url(r'/news/(?P<news_id>\d+)/delete', views.news_delete),
-    url(r'/news/(?P<news_id>\d+)/add', views.news_add)
+    url(r'/news/(?P<news_id>\d+)/add', views.news_add),
+    url(r'/news', views.news_list)
 ]
 
 
