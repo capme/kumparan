@@ -1,13 +1,13 @@
 KUMPARAN API NEWS
 
 1. Add News
-   POST <base URL>/api/news/add
+   POST {base URL}/api/news/add
 
 2. Delete News
-   GET <base URL>/api/news/<id news>/delete
+   GET {base URL}/api/news/{id news}/delete
 
 2. Filter List News
-   GET <base URL>/api/news?status=<status news>&topic=<topic news>
+   GET {base URL}/api/news?status={status news}&topic={topic news}
 
 
 Prerequisites:
